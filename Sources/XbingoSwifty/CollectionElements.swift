@@ -108,7 +108,7 @@ open class CollectionResuableView: UICollectionReusableView {
         return CGSize.zero
     }
     
-    open static func view(_ collection: UICollectionView, _ kind: String, _ indexPath: IndexPath, _ reuseSuffix: String = "") -> Self {
+    public static func view(_ collection: UICollectionView, _ kind: String, _ indexPath: IndexPath, _ reuseSuffix: String = "") -> Self {
         
         let finalReuseId = self.reuseId + reuseSuffix
         
@@ -177,7 +177,7 @@ open class TableViewCell: UITableViewCell {
         return 0.0
     }
     
-    open static func cell(_ tableView: UITableView, _ indexPath: IndexPath, _ reuseSuffix: String = "") -> Self {
+    public static func cell(_ tableView: UITableView, _ indexPath: IndexPath, _ reuseSuffix: String = "") -> Self {
         
         let finalReuseId = self.reuseId + reuseSuffix
         
@@ -195,7 +195,7 @@ open class TableViewCell: UITableViewCell {
         setUpSubviews()
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -214,7 +214,7 @@ open class TableViewHeaderFooterView : UITableViewHeaderFooterView {
         return 0.0
     }
     
-    open static func view(_ tableView: UITableView, _ reuseSuffix: String = "") -> UIView? {
+    public static func view(_ tableView: UITableView, _ reuseSuffix: String = "") -> UIView? {
         
         let finalReuseId = self.reuseId + reuseSuffix
         if tableView.viewReuseIds.contains(finalReuseId) {
@@ -231,7 +231,7 @@ open class TableViewHeaderFooterView : UITableViewHeaderFooterView {
         setUpSubviews()
     }
     
-    required init?(coder: NSCoder) {
+    required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
