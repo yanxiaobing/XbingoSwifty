@@ -7,31 +7,31 @@
 
 import UIKit
 
-class BaseCM {
-    var type : String = ""
-    var data : Any?
+open class BaseCM {
+    public var type : String = ""
+    public var data : Any?
     
-    init(_ cmType : String,_ cmData : Any? = nil) {
+    public init(_ cmType : String,_ cmData : Any? = nil) {
         type = cmType
         data = cmData
     }
 }
 
-protocol CollectionElementsProtocol {
+public protocol CollectionElementsProtocol {
     associatedtype T: BaseCM
     var dataSource: [T] {get set}
     func updateDataSource(_ data: Any?) -> Void
 }
 
-let _xbingo_index_path_ = "_xbingo_index_path_"
+public let _xbingo_index_path_ = "_xbingo_index_path_"
 
-extension IndexPath{
+public extension IndexPath{
     var string: String {
         return "\(row)" + _xbingo_index_path_ + "\(section)"
     }
 }
 
-extension String{
+public extension String{
     var indexPath: IndexPath {
         let rs = self.components(separatedBy: _xbingo_index_path_)
         if rs.count != 2 {
@@ -41,7 +41,7 @@ extension String{
     }
 }
 
-extension UICollectionView {
+public extension UICollectionView {
     
     var realWidth: CGFloat {
         return self.bounds.width - self.contentInset.left - self.contentInset.right
@@ -72,18 +72,17 @@ extension UICollectionView {
     }
 }
 
-class CollectionViewCell: UICollectionViewCell {
+open class CollectionViewCell: UICollectionViewCell {
     
     private static var reuseId: String {
         return NSStringFromClass(self) as String
     }
     
-    class func size(_ collection: UICollectionView, _ data:Any? = nil, _ indexPath: IndexPath = .init()) -> CGSize {
+    open class func size(_ collection: UICollectionView, _ data:Any? = nil, _ indexPath: IndexPath = .init()) -> CGSize {
         return CGSize.zero
     }
     
-    // 外部无需注册cell， 如果不想重用可外部传出reuseSuffix， 一般为indexPath.string
-    static func cell(_ collection: UICollectionView, _ indexPath: IndexPath, _ reuseSuffix: String = "") -> Self {
+    public static func cell(_ collection: UICollectionView, _ indexPath: IndexPath, _ reuseSuffix: String = "") -> Self {
         
         let finalReuseId = self.reuseId + reuseSuffix
         
@@ -96,20 +95,20 @@ class CollectionViewCell: UICollectionViewCell {
         return collection.dequeueReusableCell(withReuseIdentifier: finalReuseId, for: indexPath) as! Self
     }
     
-    func update(data :Any?, indexPath: IndexPath = .init(), anyParams: Any? = nil){}
+    open func update(data :Any?, indexPath: IndexPath = .init(), anyParams: Any? = nil){}
 }
 
-class CollectionResuableView: UICollectionReusableView {
+open class CollectionResuableView: UICollectionReusableView {
     
     private static var reuseId: String {
         return NSStringFromClass(self) as String
     }
     
-    class func size(_ collection: UICollectionView, _ data:Any? = nil, _ section: Int = 0) -> CGSize {
+    open class func size(_ collection: UICollectionView, _ data:Any? = nil, _ section: Int = 0) -> CGSize {
         return CGSize.zero
     }
     
-    static func view(_ collection: UICollectionView, _ kind: String, _ indexPath: IndexPath, _ reuseSuffix: String = "") -> Self {
+    open static func view(_ collection: UICollectionView, _ kind: String, _ indexPath: IndexPath, _ reuseSuffix: String = "") -> Self {
         
         let finalReuseId = self.reuseId + reuseSuffix
         
@@ -124,7 +123,7 @@ class CollectionResuableView: UICollectionReusableView {
         return collection.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: finalReuseId, for: indexPath) as! Self
     }
     
-    func update(_ data :Any?, _ indexPath: IndexPath = .init()){}
+    open func update(_ data :Any?, _ indexPath: IndexPath = .init()){}
 }
 
 
@@ -168,17 +167,17 @@ fileprivate extension UICollectionView {
     }
 }
 
-class TableViewCell: UITableViewCell {
+open class TableViewCell: UITableViewCell {
     
     private static var reuseId: String {
         return NSStringFromClass(self) as String
     }
     
-    class func height(_ data: Any?, _ indexPath: IndexPath = .init()) -> CGFloat {
+    open class func height(_ data: Any?, _ indexPath: IndexPath = .init()) -> CGFloat {
         return 0.0
     }
     
-    static func cell(_ tableView: UITableView, _ indexPath: IndexPath, _ reuseSuffix: String = "") -> Self {
+    open static func cell(_ tableView: UITableView, _ indexPath: IndexPath, _ reuseSuffix: String = "") -> Self {
         
         let finalReuseId = self.reuseId + reuseSuffix
         
@@ -202,20 +201,20 @@ class TableViewCell: UITableViewCell {
     
     func setUpSubviews(){}
     
-    func update(_ data :Any?, _ indexPath: IndexPath = .init()){}
+    open func update(_ data :Any?, _ indexPath: IndexPath = .init()){}
 }
 
-class TableViewHeaderFooterView : UITableViewHeaderFooterView {
+open class TableViewHeaderFooterView : UITableViewHeaderFooterView {
     
     private static var reuseId: String {
         return NSStringFromClass(self) as String
     }
     
-    class func height(_ data: Any?, _ section: Int) -> CGFloat{
+    open class func height(_ data: Any?, _ section: Int) -> CGFloat{
         return 0.0
     }
     
-    static func view(_ tableView: UITableView, _ reuseSuffix: String = "") -> UIView? {
+    open static func view(_ tableView: UITableView, _ reuseSuffix: String = "") -> UIView? {
         
         let finalReuseId = self.reuseId + reuseSuffix
         if tableView.viewReuseIds.contains(finalReuseId) {
@@ -238,7 +237,7 @@ class TableViewHeaderFooterView : UITableViewHeaderFooterView {
     
     func setUpSubviews(){}
     
-    func update(_ data: Any?, _ section: Int = 0){}
+    open func update(_ data: Any?, _ section: Int = 0){}
     
 }
 
