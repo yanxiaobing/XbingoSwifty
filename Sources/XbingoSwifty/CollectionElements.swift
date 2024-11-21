@@ -192,14 +192,14 @@ open class TableViewCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setUpSubviews()
+        setupSubviews()
     }
     
     required public init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setUpSubviews(){}
+    open func setupSubviews(){}
     
     open func update(_ data :Any?, _ indexPath: IndexPath = .init()){}
 }
