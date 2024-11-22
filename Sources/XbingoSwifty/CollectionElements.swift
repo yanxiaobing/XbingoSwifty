@@ -201,7 +201,7 @@ open class TableViewCell: UITableViewCell {
     
     open func setupSubviews(){}
     
-    open func update(data: Any? = nil, indexPath: IndexPath = .init(), anyParams: Any? = nil){}
+    open func update(_ data: Any? = nil, indexPath: IndexPath = .init(), anyParams: Any? = nil){}
 }
 
 open class TableViewHeaderFooterView : UITableViewHeaderFooterView {
