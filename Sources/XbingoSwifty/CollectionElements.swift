@@ -95,7 +95,7 @@ open class CollectionViewCell: UICollectionViewCell {
         return collection.dequeueReusableCell(withReuseIdentifier: finalReuseId, for: indexPath) as! Self
     }
     
-    open func update(data :Any?, indexPath: IndexPath = .init(), anyParams: Any? = nil){}
+    open func update(_ data :Any? = nil, indexPath: IndexPath = .init(), anyParams: Any? = nil){}
 }
 
 open class CollectionResuableView: UICollectionReusableView {
@@ -123,7 +123,7 @@ open class CollectionResuableView: UICollectionReusableView {
         return collection.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: finalReuseId, for: indexPath) as! Self
     }
     
-    open func update(_ data :Any?, _ indexPath: IndexPath = .init()){}
+    open func update(_ data :Any? = nil, _ indexPath: IndexPath = .init()){}
 }
 
 
@@ -201,7 +201,7 @@ open class TableViewCell: UITableViewCell {
     
     open func setupSubviews(){}
     
-    open func update(_ data :Any?, _ indexPath: IndexPath = .init()){}
+    open func update(data: Any? = nil, indexPath: IndexPath = .init(), anyParams: Any? = nil){}
 }
 
 open class TableViewHeaderFooterView : UITableViewHeaderFooterView {
@@ -214,16 +214,16 @@ open class TableViewHeaderFooterView : UITableViewHeaderFooterView {
         return 0.0
     }
     
-    public static func view(_ tableView: UITableView, _ reuseSuffix: String = "") -> UIView? {
+    public static func view(_ tableView: UITableView, _ reuseSuffix: String = "") -> Self {
         
         let finalReuseId = self.reuseId + reuseSuffix
         if tableView.viewReuseIds.contains(finalReuseId) {
-            return tableView.dequeueReusableHeaderFooterView(withIdentifier: finalReuseId)
+            return tableView.dequeueReusableHeaderFooterView(withIdentifier: finalReuseId) as! Self
         }
         
         tableView.register(self, forHeaderFooterViewReuseIdentifier: finalReuseId)
         tableView.viewReuseIds.append(finalReuseId)
-        return tableView.dequeueReusableHeaderFooterView(withIdentifier: finalReuseId)
+        return tableView.dequeueReusableHeaderFooterView(withIdentifier: finalReuseId) as! Self
     }
     
     override init(reuseIdentifier: String?) {
@@ -237,7 +237,7 @@ open class TableViewHeaderFooterView : UITableViewHeaderFooterView {
     
     open func setupSubviews(){}
     
-    open func update(_ data: Any?, _ section: Int = 0){}
+    open func update(_ data: Any? = nil, section: Int = 0, anyParams: Any? = nil){}
     
 }
 
