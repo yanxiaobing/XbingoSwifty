@@ -17,6 +17,10 @@ public class ExpandButton: UIButton {
     /// 按钮点击间隔时长（单位：秒）
     public var interval: TimeInterval = 0
     
+    /// 内容边距
+    public var edgeInserts: UIEdgeInsets = .zero
+    
+    
     private var isIgnoreAction: Bool = false
     
     public override init(frame: CGRect) {
@@ -56,5 +60,12 @@ public class ExpandButton: UIButton {
         }
         
         super.sendAction(action, to: target, for: event)
+    }
+    
+    public override var intrinsicContentSize: CGSize {
+        let oSize = super.intrinsicContentSize
+        let insets = edgeInserts
+        return .init(width: oSize.width + insets.left + insets.right,
+                     height: oSize.height + insets.top + insets.bottom)
     }
 }
