@@ -34,6 +34,13 @@ public class ExpandButton: UIButton {
     
     private var isIgnoreAction: Bool = false
     
+    /// 图片的展示模式
+    public var imageDisplayMode: UIView.ContentMode = .scaleAspectFit {
+        didSet {
+            imageView?.contentMode = imageDisplayMode
+        }
+    }
+    
     public override init(frame: CGRect) {
         super.init(frame: frame)
         setUpDefaultData()
@@ -49,6 +56,7 @@ public class ExpandButton: UIButton {
         expandMargin = 0
         interval = 0
         isIgnoreAction = false
+        imageView?.contentMode = imageDisplayMode
     }
     
     /// 判断点是否在按钮的点击范围内
@@ -106,18 +114,22 @@ public class ExpandButton: UIButton {
         let contentHeight = bounds.height - edgeInserts.top - edgeInserts.bottom
         
         let titleSize = titleLabel.intrinsicContentSize
-        let imageSize = imageView.intrinsicContentSize
+        
+        // 保持图片原始宽高比
+        let originalImageSize = imageView.image?.size ?? imageView.intrinsicContentSize
+        let imageAspectRatio = originalImageSize.width / originalImageSize.height
+        let imageHeight = min(contentHeight, originalImageSize.height)
+        let imageWidth = imageHeight * imageAspectRatio
+        let imageSize = CGSize(width: imageWidth, height: imageHeight)
         
         let totalWidth = titleSize.width + imageSize.width + titleToImgSpacing
         let titleX: CGFloat
         let imageX: CGFloat
         
         if isImgRight {
-            // 图标在右侧
             titleX = edgeInserts.left + (contentWidth - totalWidth) / 2
             imageX = titleX + titleSize.width + titleToImgSpacing
         } else {
-            // 图标在左侧
             imageX = edgeInserts.left + (contentWidth - totalWidth) / 2
             titleX = imageX + imageSize.width + titleToImgSpacing
         }
