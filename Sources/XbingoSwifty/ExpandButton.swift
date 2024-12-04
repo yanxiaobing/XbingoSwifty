@@ -133,6 +133,22 @@ public class ExpandButton: UIButton {
     public override func layoutSubviews() {
         super.layoutSubviews()
         gradientBgV?.frame = bounds
+        
+        // 如果只有标题没有图片，或者只有图片没有标题，直接居中显示
+        if titleLabel?.text != nil && imageView?.image == nil {
+            guard let titleLabel = titleLabel else { return }
+            let titleSize = titleLabel.intrinsicContentSize
+            let contentWidth = bounds.width - edgeInserts.left - edgeInserts.right
+            let contentHeight = bounds.height - edgeInserts.top - edgeInserts.bottom
+            
+            let titleX = edgeInserts.left + (contentWidth - titleSize.width) / 2
+            let titleY = edgeInserts.top + (contentHeight - titleSize.height) / 2
+            
+            titleLabel.frame = CGRect(x: titleX, y: titleY, width: titleSize.width, height: titleSize.height)
+            return
+        }
+        
+        // 原有的布局逻辑保持不变
         guard let titleLabel = titleLabel, let imageView = imageView else {
             return
         }
