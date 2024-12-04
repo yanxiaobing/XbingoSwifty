@@ -56,14 +56,14 @@ public class ExpandButton: UIButton {
     }
     
     /// 点击block
-    public var actBlock: ((_ sender: ExpandButton) -> Void)? = nil {
+    public var actionBlock: ((_ sender: ExpandButton) -> Void)? = nil {
         didSet {
             addTarget(self, action: #selector(act(_:)), for: .touchUpInside)
         }
     }
     
     @objc private func act(_ sender: ExpandButton) -> Void {
-        actBlock?(sender)
+        actionBlock?(sender)
     }
     
     private var isIgnoreAction: Bool = false
