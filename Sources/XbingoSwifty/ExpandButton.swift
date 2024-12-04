@@ -32,6 +32,22 @@ public class ExpandButton: UIButton {
         didSet { setNeedsLayout() }
     }
     
+    /// 渐变背景
+    public var gradientBgV: GradientColorView? = nil {
+        willSet {
+            guard let view = newValue else {
+                gradientBgV?.removeFromSuperview()
+                return
+            }
+            view.isUserInteractionEnabled = false
+            addSubview(view)
+        }
+        
+        didSet{
+            setNeedsLayout()
+        }
+    }
+    
     private var isIgnoreAction: Bool = false
     
     /// 图片的展示模式
@@ -105,7 +121,7 @@ public class ExpandButton: UIButton {
     /// 布局子视图
     public override func layoutSubviews() {
         super.layoutSubviews()
-        
+        gradientBgV?.frame = bounds
         guard let titleLabel = titleLabel, let imageView = imageView else {
             return
         }
