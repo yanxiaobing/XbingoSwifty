@@ -40,7 +40,7 @@ public class ExpandButton: UIButton {
                 return
             }
             view.isUserInteractionEnabled = false
-            addSubview(view)
+            insertSubview(view, at: 0)
         }
         
         didSet{
