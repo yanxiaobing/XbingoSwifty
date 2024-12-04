@@ -32,6 +32,13 @@ public class ExpandButton: UIButton {
         didSet { setNeedsLayout() }
     }
     
+    /// 图片的展示模式
+    public var imageDisplayMode: UIView.ContentMode = .scaleAspectFit {
+        didSet {
+            imageView?.contentMode = imageDisplayMode
+        }
+    }
+    
     /// 渐变背景
     public var gradientBgV: GradientColorView? = nil {
         willSet {
@@ -49,13 +56,6 @@ public class ExpandButton: UIButton {
     }
     
     private var isIgnoreAction: Bool = false
-    
-    /// 图片的展示模式
-    public var imageDisplayMode: UIView.ContentMode = .scaleAspectFit {
-        didSet {
-            imageView?.contentMode = imageDisplayMode
-        }
-    }
     
     public override init(frame: CGRect) {
         super.init(frame: frame)
