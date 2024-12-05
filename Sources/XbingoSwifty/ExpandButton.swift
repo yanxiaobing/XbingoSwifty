@@ -135,7 +135,7 @@ public class ExpandButton: UIButton {
         super.layoutSubviews()
         gradientBgV?.frame = bounds
         
-        guard let titleLabel = titleLabel, let imageView = imageView else {
+        guard let titleLabel = titleLabel, let imageView = imageView, titleLabel.text != nil, imageView.image != nil else {
             return
         }
         
