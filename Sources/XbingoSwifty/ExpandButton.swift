@@ -113,21 +113,38 @@ public class ExpandButton: UIButton {
     
     /// 重写内容尺寸逻辑
     public override var intrinsicContentSize: CGSize {
-        guard let titleLabel = titleLabel, let imageView = imageView, titleLabel.text != nil, imageView.image != nil else {
-            return super.intrinsicContentSize
+        let titleSize = titleLabel?.intrinsicContentSize ?? .zero
+        let imageSize = imageView?.intrinsicContentSize ?? .zero
+        
+        // 只有标题
+        if titleLabel?.text != nil && imageView?.image == nil {
+            return CGSize(
+                width: titleSize.width + contentEdgeInsets.left + contentEdgeInsets.right,
+                height: titleSize.height + contentEdgeInsets.top + contentEdgeInsets.bottom
+            )
         }
         
-        let titleSize = titleLabel.intrinsicContentSize
-        let imageSize = imageView.intrinsicContentSize
+        // 只有图片
+        if titleLabel?.text == nil && imageView?.image != nil {
+            return CGSize(
+                width: imageSize.width + contentEdgeInsets.left + contentEdgeInsets.right,
+                height: imageSize.height + contentEdgeInsets.top + contentEdgeInsets.bottom
+            )
+        }
         
-        let totalWidth = titleSize.width + imageSize.width + titleToImgSpacing
-        let totalHeight = max(titleSize.height, imageSize.height)
+        // 图文都有
+        if titleLabel?.text != nil && imageView?.image != nil {
+            let totalWidth = titleSize.width + imageSize.width + titleToImgSpacing
+            let totalHeight = max(titleSize.height, imageSize.height)
+            
+            return CGSize(
+                width: totalWidth + contentEdgeInsets.left + contentEdgeInsets.right,
+                height: totalHeight + contentEdgeInsets.top + contentEdgeInsets.bottom
+            )
+        }
         
-        // 加上 contentEdgeInsets 的影响
-        return CGSize(
-            width: totalWidth + contentEdgeInsets.left + contentEdgeInsets.right,
-            height: totalHeight + contentEdgeInsets.top + contentEdgeInsets.bottom
-        )
+        // 都没有
+        return super.intrinsicContentSize
     }
     
     /// 布局子视图
@@ -135,39 +152,58 @@ public class ExpandButton: UIButton {
         super.layoutSubviews()
         gradientBgV?.frame = bounds
         
-        guard let titleLabel = titleLabel, let imageView = imageView, titleLabel.text != nil, imageView.image != nil else {
-            return
-        }
-        
         let contentWidth = bounds.width - contentEdgeInsets.left - contentEdgeInsets.right
         let contentHeight = bounds.height - contentEdgeInsets.top - contentEdgeInsets.bottom
         
-        let titleSize = titleLabel.intrinsicContentSize
+        // 获取标题和图片的尺寸
+        let titleSize = titleLabel?.intrinsicContentSize ?? .zero
+        let originalImageSize = imageView?.image?.size ?? .zero
         
-        // 保持图片原始宽高比
-        let originalImageSize = imageView.image?.size ?? imageView.intrinsicContentSize
-        let imageAspectRatio = originalImageSize.width / originalImageSize.height
-        let imageHeight = min(contentHeight, originalImageSize.height)
-        let imageWidth = imageHeight * imageAspectRatio
-        let imageSize = CGSize(width: imageWidth, height: imageHeight)
-        
-        let totalWidth = titleSize.width + imageSize.width + titleToImgSpacing
-        let titleX: CGFloat
-        let imageX: CGFloat
-        
-        if isImgRight {
-            titleX = contentEdgeInsets.left + (contentWidth - totalWidth) / 2
-            imageX = titleX + titleSize.width + titleToImgSpacing
-        } else {
-            imageX = contentEdgeInsets.left + (contentWidth - totalWidth) / 2
-            titleX = imageX + imageSize.width + titleToImgSpacing
+        // 只有标题
+        if let titleLabel = titleLabel, titleLabel.text != nil, imageView?.image == nil {
+            let titleX = contentEdgeInsets.left + (contentWidth - titleSize.width) / 2
+            let titleY = contentEdgeInsets.top + (contentHeight - titleSize.height) / 2
+            titleLabel.frame = CGRect(x: titleX, y: titleY, width: titleSize.width, height: titleSize.height)
+            return
         }
         
-        let titleY = contentEdgeInsets.top + (contentHeight - titleSize.height) / 2
-        let imageY = contentEdgeInsets.top + (contentHeight - imageSize.height) / 2
+        // 只有图片
+        if let imageView = imageView, imageView.image != nil, titleLabel?.text == nil {
+            let imageAspectRatio = originalImageSize.width / originalImageSize.height
+            let imageHeight = min(contentHeight, originalImageSize.height)
+            let imageWidth = imageHeight * imageAspectRatio
+            
+            let imageX = contentEdgeInsets.left + (contentWidth - imageWidth) / 2
+            let imageY = contentEdgeInsets.top + (contentHeight - imageHeight) / 2
+            imageView.frame = CGRect(x: imageX, y: imageY, width: imageWidth, height: imageHeight)
+            return
+        }
         
-        // 设置图标和标题的 frame
-        imageView.frame = CGRect(x: imageX, y: imageY, width: imageSize.width, height: imageSize.height)
-        titleLabel.frame = CGRect(x: titleX, y: titleY, width: titleSize.width, height: titleSize.height)
+        // 图文都有
+        if let titleLabel = titleLabel, let imageView = imageView,
+           titleLabel.text != nil, imageView.image != nil {
+            let imageAspectRatio = originalImageSize.width / originalImageSize.height
+            let imageHeight = min(contentHeight, originalImageSize.height)
+            let imageWidth = imageHeight * imageAspectRatio
+            let imageSize = CGSize(width: imageWidth, height: imageHeight)
+            
+            let totalWidth = titleSize.width + imageSize.width + titleToImgSpacing
+            let titleX: CGFloat
+            let imageX: CGFloat
+            
+            if isImgRight {
+                titleX = contentEdgeInsets.left + (contentWidth - totalWidth) / 2
+                imageX = titleX + titleSize.width + titleToImgSpacing
+            } else {
+                imageX = contentEdgeInsets.left + (contentWidth - totalWidth) / 2
+                titleX = imageX + imageSize.width + titleToImgSpacing
+            }
+            
+            let titleY = contentEdgeInsets.top + (contentHeight - titleSize.height) / 2
+            let imageY = contentEdgeInsets.top + (contentHeight - imageSize.height) / 2
+            
+            imageView.frame = CGRect(x: imageX, y: imageY, width: imageSize.width, height: imageSize.height)
+            titleLabel.frame = CGRect(x: titleX, y: titleY, width: titleSize.width, height: titleSize.height)
+        }
     }
 }
