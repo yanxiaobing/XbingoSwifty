@@ -152,14 +152,31 @@ public class ExpandButton: UIButton {
         let imageSize = CGSize(width: imageWidth, height: imageHeight)
         
         let totalWidth = titleSize.width + imageSize.width + titleToImgSpacing
+        var startX: CGFloat = contentEdgeInsets.left
+        
+        // 根据 contentHorizontalAlignment 计算起始 x 坐标
+        switch contentHorizontalAlignment {
+        case .center:
+            startX += (contentWidth - totalWidth) / 2
+        case .right:
+            startX += contentWidth - totalWidth
+        case .left:
+            startX += 0
+        case .fill:
+            // Fill 暂时按照 center 处理
+            startX += (contentWidth - totalWidth) / 2
+        @unknown default:
+            startX += (contentWidth - totalWidth) / 2
+        }
+        
         let titleX: CGFloat
         let imageX: CGFloat
         
         if isImgRight {
-            titleX = contentEdgeInsets.left + (contentWidth - totalWidth) / 2
+            titleX = startX
             imageX = titleX + titleSize.width + titleToImgSpacing
         } else {
-            imageX = contentEdgeInsets.left + (contentWidth - totalWidth) / 2
+            imageX = startX
             titleX = imageX + imageSize.width + titleToImgSpacing
         }
         
