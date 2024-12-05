@@ -19,14 +19,14 @@ public class ExpandButton: UIButton {
     
     /// 图标与标题之间的间距
     public var titleToImgSpacing: CGFloat = 0 {
-        didSet { 
+        didSet {
             setNeedsLayout()
         }
     }
     
     /// 图标是否在右侧
     public var isImgRight: Bool = false {
-        didSet { 
+        didSet {
             setNeedsLayout()
         }
     }
@@ -152,31 +152,14 @@ public class ExpandButton: UIButton {
         let imageSize = CGSize(width: imageWidth, height: imageHeight)
         
         let totalWidth = titleSize.width + imageSize.width + titleToImgSpacing
-        var startX: CGFloat = contentEdgeInsets.left
-        
-        // 根据 contentHorizontalAlignment 计算起始 x 坐标
-        switch contentHorizontalAlignment {
-        case .center:
-            startX += (contentWidth - totalWidth) / 2
-        case .right:
-            startX += contentWidth - totalWidth
-        case .left:
-            startX += 0
-        case .fill:
-            // Fill 暂时按照 center 处理
-            startX += (contentWidth - totalWidth) / 2
-        @unknown default:
-            startX += (contentWidth - totalWidth) / 2
-        }
-        
         let titleX: CGFloat
         let imageX: CGFloat
         
         if isImgRight {
-            titleX = startX
+            titleX = contentEdgeInsets.left + (contentWidth - totalWidth) / 2
             imageX = titleX + titleSize.width + titleToImgSpacing
         } else {
-            imageX = startX
+            imageX = contentEdgeInsets.left + (contentWidth - totalWidth) / 2
             titleX = imageX + imageSize.width + titleToImgSpacing
         }
         
