@@ -188,21 +188,25 @@ public class ExpandButton: UIButton {
             let imageSize = CGSize(width: imageWidth, height: imageHeight)
             
             let totalWidth = titleSize.width + imageSize.width + titleToImgSpacing
+            
+            // 使用按钮总宽度来计算起始位置，确保内容真正居中
+            let startX = (bounds.width - totalWidth) / 2
+            
             let titleX: CGFloat
             let imageX: CGFloat
             
             if isImgRight {
-                titleX = contentEdgeInsets.left + (contentWidth - totalWidth) / 2
+                titleX = startX
                 imageX = titleX + titleSize.width + titleToImgSpacing
             } else {
-                imageX = contentEdgeInsets.left + (contentWidth - totalWidth) / 2
+                imageX = startX
                 titleX = imageX + imageSize.width + titleToImgSpacing
             }
             
             let titleY = contentEdgeInsets.top + (contentHeight - titleSize.height) / 2
             let imageY = contentEdgeInsets.top + (contentHeight - imageSize.height) / 2
             
-            imageView.frame = CGRect(x: imageX, y: imageY, width: imageSize.width, height: imageSize.height)
+            imageView.frame = CGRect(x: imageX, y: imageY, width: imageWidth, height: imageHeight)
             titleLabel.frame = CGRect(x: titleX, y: titleY, width: titleSize.width, height: titleSize.height)
         }
     }
