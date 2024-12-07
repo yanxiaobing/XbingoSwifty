@@ -13,7 +13,7 @@ public class LimitedLinesTextView: UITextView {
     
     public var maxWords: Int = 0
     
-    override var text: String? {
+    public override var text: String? {
         didSet{
             invalidateIntrinsicContentSize()
             placeholderLab.isHidden = text?.count ?? 0 > 0
@@ -51,7 +51,7 @@ public class LimitedLinesTextView: UITextView {
         }
     }
     
-    override var textContainerInset: UIEdgeInsets {
+    public override var textContainerInset: UIEdgeInsets {
         didSet {
             super.textContainerInset = textContainerInset
             setNeedsLayout()
@@ -85,7 +85,7 @@ public class LimitedLinesTextView: UITextView {
     }
     
     
-    override var intrinsicContentSize: CGSize {
+    public override var intrinsicContentSize: CGSize {
         let size = self.sizeThatFits(CGSize(width: self.bounds.width, height: CGFloat.greatestFiniteMagnitude))
         let mh = maxHeight
         if mh > 0 && size.height > mh {
@@ -103,7 +103,7 @@ public class LimitedLinesTextView: UITextView {
     }
     
     private var xb_lastW = 0.0
-    override func layoutSubviews() {
+    public override func layoutSubviews() {
         super.layoutSubviews()
         if xb_lastW != bounds.width {
             xb_lastW = bounds.width
@@ -118,7 +118,7 @@ public class LimitedLinesTextView: UITextView {
 
 extension LimitedLinesTextView: UITextViewDelegate {
     
-    func textViewDidChange(_ textView: UITextView) {
+    public func textViewDidChange(_ textView: UITextView) {
         
         // 处理自动布局高度变化
         invalidateIntrinsicContentSize()
