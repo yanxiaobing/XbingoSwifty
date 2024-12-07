@@ -7,6 +7,13 @@
 
 import UIKit
 
+extension String {
+    
+    var trim: String {
+        return self.replacingOccurrences(of: " ", with: "")
+    }
+}
+
 // 手机号码相关
 extension String {
     

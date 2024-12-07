@@ -24,7 +24,7 @@ public class LimitedWordsTextField: UITextField {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override var text: String? {
+    public override var text: String? {
         didSet{
             didChangeBlock?(self)
         }
@@ -46,7 +46,7 @@ extension LimitedWordsTextField: UITextFieldDelegate {
         }
         
         if maxWords > 0 {
-            let textContent = isTrim ? sender.text?.trim() : sender.text
+            let textContent = isTrim ? sender.text?.trim : sender.text
             let textCount = textContent?.count ?? 0
             
             // 超长
@@ -70,8 +70,8 @@ extension LimitedWordsTextField: UITextFieldDelegate {
             return
         }
         
-        if sender.text != sender.text?.trim() {
-            sender.text = sender.text?.trim()
+        if sender.text != sender.text?.trim {
+            sender.text = sender.text?.trim
             return
         }
         
