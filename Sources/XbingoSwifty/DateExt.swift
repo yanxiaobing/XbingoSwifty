@@ -13,11 +13,12 @@ import Darwin
 // 单例优化转化效率
 public class DateService {
     
+    @preconcurrency @MainActor
+    public static let shared = DateService()
+    
     private init() {}
     
-    private let formatterQueue = DispatchQueue(label: "com.dateService.formatterQueue")
-    
-    lazy var formatter: DateFormatter = {
+    public lazy var formatter: DateFormatter = {
         let f = DateFormatter()
         return f
     }()
@@ -43,27 +44,27 @@ public extension Date{
 // MARK: Date offset
 public extension Date{
     
-    func yearOffset(_ offset:Int) -> Date {
+    public func yearOffset(_ offset:Int) -> Date {
         return Calendar.current.date(byAdding: .year, value: offset, to: self) ?? self
     }
     
-    func monthOffset(_ offset:Int) -> Date {
+    public func monthOffset(_ offset:Int) -> Date {
         return Calendar.current.date(byAdding: .month, value: offset, to: self) ?? self
     }
     
-    func dayOffset(_ offset:Int) -> Date {
+    public func dayOffset(_ offset:Int) -> Date {
         return Calendar.current.date(byAdding: .day, value: offset, to: self) ?? self
     }
     
-    func hourOffset(_ offset:Int) -> Date {
+    public func hourOffset(_ offset:Int) -> Date {
         return Calendar.current.date(byAdding: .hour, value: offset, to: self) ?? self
     }
     
-    func minuteOffset(_ offset:Int) -> Date {
+    public func minuteOffset(_ offset:Int) -> Date {
         return Calendar.current.date(byAdding: .minute, value: offset, to: self) ?? self
     }
     
-    func secondOffset(_ offset:Int) -> Date {
+    public func secondOffset(_ offset:Int) -> Date {
         return Calendar.current.date(byAdding: .second, value: offset, to: self) ?? self
     }
 }
