@@ -9,21 +9,21 @@ import Foundation
 import UIKit
 
 public extension CGFloat {
-    @MainActor
+    @preconcurrency @MainActor
     var pt: CGFloat {
         UIScreen.main.bounds.width / 375.0 * self
     }
 }
 
 public extension Int {
-    @MainActor
+    @preconcurrency @MainActor
     var pt: CGFloat {
         UIScreen.main.bounds.width / 375.0 * CGFloat(self)
     }
 }
 
 public extension Double {
-    @MainActor
+    @preconcurrency @MainActor
     var pt: CGFloat {
         UIScreen.main.bounds.width / 375.0 * CGFloat(self)
     }
