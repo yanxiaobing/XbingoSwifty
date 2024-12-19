@@ -9,7 +9,7 @@
 import UIKit
 
 /// 可扩展点击范围的按钮
-public class ExpandButton: UIButton {
+open class ExpandButton: UIButton {
     
     /// 按钮点击范围在原有基础上的增量（单位：pt）
     public var expandMargin: CGFloat = 0
@@ -148,7 +148,7 @@ public class ExpandButton: UIButton {
     }
     
     /// 布局子视图
-    public override func layoutSubviews() {
+    open override func layoutSubviews() {
         super.layoutSubviews()
         gradientBgV?.frame = bounds
         
