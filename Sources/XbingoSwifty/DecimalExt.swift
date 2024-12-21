@@ -13,6 +13,11 @@ public extension CGFloat {
     var pt: CGFloat {
         UIScreen.main.bounds.width / 375.0 * self
     }
+    
+    @preconcurrency @MainActor
+    static var minH: CGFloat {
+        1 / UIScreen.main.scale
+    }
 }
 
 public extension Int {
