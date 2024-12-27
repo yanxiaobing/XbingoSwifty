@@ -7,7 +7,7 @@
 
 import UIKit
 
-extension String {
+public extension String {
     
     var trim: String {
         return self.replacingOccurrences(of: " ", with: "")
@@ -15,7 +15,7 @@ extension String {
 }
 
 // 手机号码相关
-extension String {
+public extension String {
     
     public var containsPhone: Bool {
         let regex = "(\\d{3})(\\d{4})(\\d{4})"
@@ -26,6 +26,13 @@ extension String {
     public var desensitizedText: String {
         let regex = "(\\d{3})(\\d{4})(\\d{4})"
         return self.replacingOccurrences(of: regex, with: "$1****$3", options: .regularExpression)
+    }
+    
+    func isEmail() -> Bool{
+        if self.count == 0 { return false }
+        let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
+        let emailTest : NSPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
+        return emailTest.evaluate(with: self)
     }
 }
 
@@ -74,4 +81,76 @@ extension String {
         
         return size
     }
+}
+
+
+// 富文本
+public extension String {
+    
+    func paraAttrStr(lineSpacing : CGFloat = 6) -> NSMutableAttributedString {
+        let attrStr = NSMutableAttributedString.init(string: self)
+        let paragStyle = NSMutableParagraphStyle.init()
+        paragStyle.lineSpacing = lineSpacing
+        let range = NSMakeRange(0, self.count)
+        attrStr.addAttributes([NSAttributedString.Key.paragraphStyle:paragStyle], range: range)
+        return attrStr
+    }
+    
+    func colorAttrString(_ withTargetColor:UIColor,targetTexts:[String]) -> NSAttributedString {
+        return attrString(targetColor:withTargetColor, targetTexts: targetTexts)
+    }
+    
+    func fontAttrString(_ withTargetFont:UIFont, baseOffset: Any? = 0, targetTexts:[String]) -> NSAttributedString {
+        return attrString(targetFont: withTargetFont, baseOffset: baseOffset, targetTexts: targetTexts)
+    }
+    
+    func attrString(targetFont:UIFont? = nil, targetColor:UIColor? = nil, baseOffset:Any? = 0, targetTexts:[String]) -> NSAttributedString {
+        let attrStr = NSMutableAttributedString.init(string: self)
+        for subText in targetTexts {
+            let ranges = self.nsranges(of: subText)
+            for range in ranges {
+                if let font = targetFont {
+                    attrStr.addAttribute(NSAttributedString.Key.font, value: font, range: range)
+                }
+                if let color = targetColor {
+                    attrStr.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: range)
+                }
+                if let offset = baseOffset {
+                    attrStr.addAttribute(NSAttributedString.Key.baselineOffset, value: offset, range: range)
+                }
+            }
+        }
+        return attrStr
+    }
+    
+    func nsranges(of string: String) -> [NSRange] {
+        var ranges = [NSRange]()
+        var searchRange = self.startIndex..<self.endIndex
+        while let range = self.range(of: string, options: .literal, range: searchRange) {
+            ranges.append(NSRange(range, in: self))
+            searchRange = range.upperBound..<self.endIndex
+        }
+        return ranges
+    }
+    
+    func ranges(of string: String) -> [Range<String.Index>] {
+        var rangeArray = [Range<String.Index>]()
+        var searchedRange: Range<String.Index>
+        guard let sr = self.range(of: self) else {
+            return rangeArray
+        }
+        searchedRange = sr
+        var resultRange = self.range(of: string, options: .regularExpression, range: searchedRange, locale: nil)
+        while let range = resultRange {
+            rangeArray.append(range)
+            searchedRange = Range(uncheckedBounds: (range.upperBound, searchedRange.upperBound))
+            resultRange = self.range(of: string, options: .regularExpression, range: searchedRange, locale: nil)
+        }
+        return rangeArray
+    }
+    
+    func nsrange(fromRange range : Range<String.Index>) -> NSRange {
+        return NSRange(range, in: self)
+    }
+    
 }
