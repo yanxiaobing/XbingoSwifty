@@ -44,27 +44,27 @@ public extension Date{
 // MARK: Date offset
 public extension Date{
     
-    public func yearOffset(_ offset:Int) -> Date {
+    func yearOffset(_ offset:Int) -> Date {
         return Calendar.current.date(byAdding: .year, value: offset, to: self) ?? self
     }
     
-    public func monthOffset(_ offset:Int) -> Date {
+    func monthOffset(_ offset:Int) -> Date {
         return Calendar.current.date(byAdding: .month, value: offset, to: self) ?? self
     }
     
-    public func dayOffset(_ offset:Int) -> Date {
+    func dayOffset(_ offset:Int) -> Date {
         return Calendar.current.date(byAdding: .day, value: offset, to: self) ?? self
     }
     
-    public func hourOffset(_ offset:Int) -> Date {
+    func hourOffset(_ offset:Int) -> Date {
         return Calendar.current.date(byAdding: .hour, value: offset, to: self) ?? self
     }
     
-    public func minuteOffset(_ offset:Int) -> Date {
+    func minuteOffset(_ offset:Int) -> Date {
         return Calendar.current.date(byAdding: .minute, value: offset, to: self) ?? self
     }
     
-    public func secondOffset(_ offset:Int) -> Date {
+    func secondOffset(_ offset:Int) -> Date {
         return Calendar.current.date(byAdding: .second, value: offset, to: self) ?? self
     }
 }
