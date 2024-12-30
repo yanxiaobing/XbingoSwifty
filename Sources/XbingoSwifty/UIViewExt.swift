@@ -27,3 +27,82 @@ public extension UIView {
         layer.mask = shape
     }
 }
+
+public extension UIView {
+
+    // MARK: - Frame Properties
+
+    var xb_width: CGFloat {
+        get { return self.frame.size.width }
+        set {
+            var frame = self.frame
+            frame.size.width = newValue
+            self.frame = frame
+        }
+    }
+
+    var xb_height: CGFloat {
+        get { return self.frame.size.height }
+        set {
+            var frame = self.frame
+            frame.size.height = newValue
+            self.frame = frame
+        }
+    }
+
+    var xb_top: CGFloat {
+        get { return self.frame.origin.y }
+        set {
+            var frame = self.frame
+            frame.origin.y = newValue
+            self.frame = frame
+        }
+    }
+
+    var xb_left: CGFloat {
+        get { return self.frame.origin.x }
+        set {
+            var frame = self.frame
+            frame.origin.x = newValue
+            self.frame = frame
+        }
+    }
+
+    var xb_bottom: CGFloat {
+        get { return self.frame.origin.y + self.frame.size.height }
+        set {
+            var frame = self.frame
+            frame.origin.y = newValue - frame.size.height
+            self.frame = frame
+        }
+    }
+
+    var xb_right: CGFloat {
+        get { return self.frame.origin.x + self.frame.size.width }
+        set {
+            var frame = self.frame
+            frame.origin.x = newValue - frame.size.width
+            self.frame = frame
+        }
+    }
+
+    // MARK: - Center Properties
+
+    var xb_centerX: CGFloat {
+        get { return self.center.x }
+        set {
+            var center = self.center
+            center.x = newValue
+            self.center = center
+        }
+    }
+
+    var xb_centerY: CGFloat {
+        get { return self.center.y }
+        set {
+            var center = self.center
+            center.y = newValue
+            self.center = center
+        }
+    }
+}
