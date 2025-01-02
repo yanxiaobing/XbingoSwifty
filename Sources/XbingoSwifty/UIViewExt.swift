@@ -26,6 +26,18 @@ public extension UIView {
         shape.path = path.cgPath
         layer.mask = shape
     }
+    
+    func showShadow(
+        color: UIColor? = UIColor.black.withAlphaComponent(0.5),
+        offset: CGSize? = .init(width: 2, height: 2),
+        opacity: Float? = 0.4,
+        radius: CGFloat? = 4
+    ) -> Void {
+        self.layer.shadowColor = color?.cgColor
+        self.layer.shadowOffset = offset ?? .zero
+        self.layer.shadowOpacity = opacity ?? .zero
+        self.layer.shadowRadius = radius ?? .zero
+    }
 }
 
 public extension UIView {
