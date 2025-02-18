@@ -9,31 +9,31 @@
 import SwiftUI
 
 @dynamicMemberLookup
-open struct ThemeColor {
-    subscript(dynamicMember member: String) -> UIColor {
+public struct ThemeColor {
+    public subscript(dynamicMember member: String) -> UIColor {
         let hex = member.dropFirst() // 去掉首字母“c”
         return UIColor.color(hexStr: String(hex))
     }
     
-    subscript(dynamicMember member: String) -> Color {
+    public subscript(dynamicMember member: String) -> Color {
         let hex = member.dropFirst() // 去掉首字母“c”
         return Color.color(hexStr: String(hex))
     }
 }
 
-open extension UIColor {
+public extension UIColor {
     
-    open static var theme = ThemeColor()
+    nonisolated(unsafe) static let theme = ThemeColor()
     
-    open static func color(hexStr: String) -> UIColor {
+    static func color(hexStr: String) -> UIColor {
         var hex = hexStr.trimmingCharacters(in: .whitespacesAndNewlines)
         hex = hex.replacingOccurrences(of: "#", with: "")
-
+        
         var rgb: UInt64 = 0
         var r: CGFloat = 0.0
         var g: CGFloat = 0.0
         var b: CGFloat = 0.0
-
+        
         let scanner = Scanner(string: hex)
         if scanner.scanHexInt64(&rgb) {
             r = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
@@ -43,27 +43,27 @@ open extension UIColor {
         return UIColor(red: r, green: g, blue: b, alpha: 1.0)
     }
     
-    open static var random: UIColor {
+    static var random: UIColor {
         let red = Int(arc4random_uniform(256))
         let green = Int(arc4random_uniform(256))
         let blue = Int(arc4random_uniform(256))
         let hexStr = String(format: "#%02X%02X%02X", red, green, blue)
         return color(hexStr: hexStr)
     }
-    // 设置颜色透明度
-    open func alpha(_ value: CGFloat) -> UIColor {
+    
+    func alpha(_ value: CGFloat) -> UIColor {
         return self.withAlphaComponent(value)
     }
 }
 
-open extension Color {
-    open static var theme = ThemeColor()
+public extension Color {
+    nonisolated(unsafe) static let theme = ThemeColor()
 
-    open static func color(hexStr: String) -> Color {
+    static func color(hexStr: String) -> Color {
         return Color(UIColor.color(hexStr: hexStr))
     }
     
-    open static var random: Color {
+    static var random: Color {
         return Color(UIColor.random)
     }
 }
