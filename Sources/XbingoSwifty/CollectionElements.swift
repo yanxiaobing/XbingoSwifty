@@ -123,7 +123,7 @@ open class CollectionResuableView: UICollectionReusableView {
         return collection.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: finalReuseId, for: indexPath) as! Self
     }
     
-    open func update(_ data :Any? = nil, _ indexPath: IndexPath = .init()){}
+    open func update(_ data :Any?, _ indexPath: IndexPath = .init(), anyParams: Any? = nil){}
 }
 
 
