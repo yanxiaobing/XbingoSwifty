@@ -28,6 +28,22 @@ public class GradientColorView: UIView {
         }
     }
     
+    public var startPoint: CGPoint = .zero {
+        didSet {
+            applyTransaction {
+                gradientLayer.startPoint = startPoint
+            }
+        }
+    }
+    
+    public var endPoint: CGPoint = .zero {
+        didSet {
+            applyTransaction {
+                gradientLayer.endPoint = endPoint
+            }
+        }
+    }
+    
     /// 渐变颜色
     public var colors: [UIColor] = [] {
         didSet {
