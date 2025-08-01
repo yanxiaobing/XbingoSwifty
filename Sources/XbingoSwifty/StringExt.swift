@@ -123,7 +123,13 @@ public extension String {
         return attrString(targetFont: withTargetFont, baseOffset: baseOffset, targetTexts: targetTexts)
     }
     
-    func attrString(targetFont:UIFont? = nil, targetColor:UIColor? = nil, baseOffset:Any? = 0, targetTexts:[String]) -> NSAttributedString {
+    func attrString(
+        targetFont:UIFont? = nil,
+        targetColor:UIColor? = nil,
+        baseOffset:Any? = 0,
+        minimumLineHeight: CGFloat? = nil,
+        targetTexts:[String]) -> NSAttributedString
+    {
         let attrStr = NSMutableAttributedString.init(string: self)
         for subText in targetTexts {
             let ranges = self.nsranges(of: subText)
@@ -138,6 +144,13 @@ public extension String {
                     attrStr.addAttribute(NSAttributedString.Key.baselineOffset, value: offset, range: range)
                 }
             }
+        }
+        
+        if let minLineHeight = minimumLineHeight {
+            let paragStyle = NSMutableParagraphStyle.init()
+            let range = NSMakeRange(0, self.count)
+            paragStyle.minimumLineHeight = minLineHeight
+            attrStr.addAttributes([NSAttributedString.Key.paragraphStyle:paragStyle], range: range)
         }
         return attrStr
     }
