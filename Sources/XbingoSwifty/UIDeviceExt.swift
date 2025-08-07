@@ -20,6 +20,13 @@ public extension UIDevice{
         return version
     }
     
+    static var buildVersion: String {
+        guard let version : String = Bundle.main.infoDictionary?["CFBundleVersion"] as? String else {
+            return "2025080701"
+        }
+        return version
+    }
+    
     static var modelName: String {
         var systemInfo = utsname()
         uname(&systemInfo)
