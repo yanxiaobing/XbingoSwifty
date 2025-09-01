@@ -194,7 +194,11 @@ open class ExpandButton: UIButton {
         if titleLabel.text != nil && imageView.image != nil {
             let imageSize = calculateImageSize()
             let totalWidth = titleSize.width + imageSize.width + titleToImgSpacing
-            let startX = contentEdgeInsets.left
+            var startX = contentEdgeInsets.left
+            
+            if contentHorizontalAlignment == .center {
+                startX = (bounds.width - totalWidth)/2.0
+            }
             
             let (titleX, imageX) = isImgRight
                 ? (startX, startX + titleSize.width + titleToImgSpacing)
