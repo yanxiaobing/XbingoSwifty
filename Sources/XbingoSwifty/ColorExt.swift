@@ -48,6 +48,7 @@ public extension UIColor {
         let green = Int(arc4random_uniform(256))
         let blue = Int(arc4random_uniform(256))
         let hexStr = String(format: "#%02X%02X%02X", red, green, blue)
+        print("[XbingoSwify] random color = \(hexStr)")
         return color(hexStr: hexStr)
     }
     

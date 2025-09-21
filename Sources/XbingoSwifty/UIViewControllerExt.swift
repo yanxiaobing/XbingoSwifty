@@ -12,7 +12,7 @@ public extension UIViewController{
     public func fullPresent(_ viewControllerToPresent: UIViewController, animated flag: Bool, completion: (() -> Void)? = nil){
         
         if #available(iOS 13.0, *) {
-            viewControllerToPresent.modalPresentationStyle = .overFullScreen
+            viewControllerToPresent.modalPresentationStyle = .fullScreen
             self.present(viewControllerToPresent, animated: flag, completion: completion)
             return
         }
