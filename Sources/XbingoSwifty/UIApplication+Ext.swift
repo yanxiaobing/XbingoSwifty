@@ -4,7 +4,7 @@
 //
 //  Created by xbingo on 2025/9/11.
 //
-
+import UIKit
 
 public extension UIApplication {
     var keyWindow: UIWindow? {
