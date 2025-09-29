@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension FileManager {
+public extension FileManager {
     
     /// Document 目录
     /// - 用于存储用户生成的数据或不可再生的数据
