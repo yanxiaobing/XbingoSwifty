@@ -19,10 +19,7 @@ let package = Package(
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
             name: "XbingoSwifty",
-            dependencies: [],
-            swiftSettings: [
-                .unsafeFlags(["-target", "x86_64-apple-ios-simulator,arm64-apple-ios-simulator"])
-            ]
+            dependencies: []
         ),
         .testTarget(
             name: "XbingoSwiftyTests",
