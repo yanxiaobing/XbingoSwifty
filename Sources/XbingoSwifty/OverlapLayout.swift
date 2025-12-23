@@ -17,7 +17,7 @@ public class OverlapLayout: UICollectionViewFlowLayout {
     /// 重叠高度
     var overlapHeight: CGFloat = 0
 
-    override func layoutAttributesForElements(in rect: CGRect)
+    public override func layoutAttributesForElements(in rect: CGRect)
         -> [UICollectionViewLayoutAttributes]? {
 
         guard let collectionView = collectionView,
@@ -39,7 +39,7 @@ public class OverlapLayout: UICollectionViewFlowLayout {
         return attrs
     }
 
-    override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
+    public override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         // 只有宽度变化才 invalidate，避免性能问题
         guard let cv = collectionView else { return false }
         return newBounds.width != cv.bounds.width
