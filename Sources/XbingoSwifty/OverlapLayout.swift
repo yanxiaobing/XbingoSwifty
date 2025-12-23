@@ -12,10 +12,10 @@ import UIKit
 public class OverlapLayout: UICollectionViewFlowLayout {
     
     /// 从哪个 section 开始重叠
-    var overlapSection: Int = 0
+    public var overlapSection: Int = 0
 
     /// 重叠高度
-    var overlapHeight: CGFloat = 0
+    public var overlapHeight: CGFloat = 0
 
     public override func layoutAttributesForElements(in rect: CGRect)
         -> [UICollectionViewLayoutAttributes]? {
