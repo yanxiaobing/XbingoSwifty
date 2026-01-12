@@ -11,11 +11,13 @@ import CryptoKit
 
 public extension String {
     
-    var trim: String {
-        return self.replacingOccurrences(of: " ", with: "")
-    }
+    public var trim: String { return self.replacingOccurrences(of: " ", with: "") }
+
+    public var urlEncoded: String { return addingPercentEncoding(withAllowedCharacters:.urlQueryAllowed) ?? "" }
     
-    var md5: String {
+    public var urlDecoded: String { return removingPercentEncoding ?? "" }
+    
+    public var md5: String {
         
         guard let data = data(using: .utf8) else {
             return self
@@ -52,6 +54,18 @@ public extension String {
         let emailRegex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}"
         let emailTest : NSPredicate = NSPredicate(format: "SELF MATCHES %@", emailRegex)
         return emailTest.evaluate(with: self)
+    }
+}
+
+extension String {
+    public func toJson() -> [String: Any]? {
+        guard let data = data(using: .utf8) else { return nil }
+        do {
+            return try JSONSerialization.jsonObject(with: data, options: .mutableContainers) as? [String: Any]
+        } catch {
+            print("[XbingoSwify] toJson error: \(error)")
+            return nil
+        }
     }
 }
 
