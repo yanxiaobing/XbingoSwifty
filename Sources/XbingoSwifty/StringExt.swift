@@ -57,7 +57,7 @@ public extension String {
     }
 }
 
-extension String {
+public extension String {
     public func toJson() -> [String: Any]? {
         guard let data = data(using: .utf8) else { return nil }
         do {
