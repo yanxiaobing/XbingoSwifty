@@ -50,8 +50,22 @@ public extension UIColor {
     func alpha(_ value: CGFloat) -> UIColor {
         return self.withAlphaComponent(value)
     }
-    
-    /// 转换为 SwiftUI Color
-    var su_color: Color { Color(self) }
 }
 
+
+@dynamicMemberLookup
+public struct ThemeSUColor {
+    public subscript(dynamicMember member: String) -> Color {
+        return Color(UIColor.theme[dynamicMember: member])
+    }
+}
+
+public extension Color {
+    nonisolated(unsafe) static let theme = ThemeSUColor()
+    
+    static func color(hexStr: String) -> Color {
+        Color(UIColor.color(hexStr: hexStr))
+    }
+
+    static var random: Color { Color(UIColor.random) }
+}
