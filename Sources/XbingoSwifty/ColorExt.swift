@@ -14,11 +14,6 @@ public struct ThemeColor {
         let hex = member.dropFirst() // 去掉首字母“c”
         return UIColor.color(hexStr: String(hex))
     }
-    
-    public subscript(dynamicMember member: String) -> Color {
-        let hex = member.dropFirst() // 去掉首字母“c”
-        return Color.color(hexStr: String(hex))
-    }
 }
 
 public extension UIColor {
@@ -55,16 +50,8 @@ public extension UIColor {
     func alpha(_ value: CGFloat) -> UIColor {
         return self.withAlphaComponent(value)
     }
-}
-
-public extension Color {
-    nonisolated(unsafe) static let theme = ThemeColor()
-
-    static func color(hexStr: String) -> Color {
-        return Color(UIColor.color(hexStr: hexStr))
-    }
     
-    static var random: Color {
-        return Color(UIColor.random)
-    }
+    /// 转换为 SwiftUI Color
+    var su_color: Color { Color(self) }
 }
+
