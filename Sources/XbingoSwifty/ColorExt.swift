@@ -1,6 +1,6 @@
 //
 //  ColorExt.swift
-//  QuitSmoke
+//  XbingoSwift
 //
 //  Created by xbingo on 2024/11/9.
 //  Copyright © 2024 Xbingo. All rights reserved.
@@ -9,16 +9,23 @@
 import SwiftUI
 
 @dynamicMemberLookup
-public struct ThemeColor {
+public struct ThemeUIColor {
     public subscript(dynamicMember member: String) -> UIColor {
         let hex = member.dropFirst() // 去掉首字母“c”
         return UIColor.color(hexStr: String(hex))
     }
 }
 
+@dynamicMemberLookup
+public struct ThemeSUColor {
+    public subscript(dynamicMember member: String) -> Color {
+        return Color(UIColor.theme[dynamicMember: member])
+    }
+}
+
 public extension UIColor {
     
-    nonisolated(unsafe) static let theme = ThemeColor()
+    nonisolated(unsafe) static let theme = ThemeUIColor()
     
     static func color(hexStr: String) -> UIColor {
         var hex = hexStr.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -49,14 +56,6 @@ public extension UIColor {
     
     func alpha(_ value: CGFloat) -> UIColor {
         return self.withAlphaComponent(value)
-    }
-}
-
-
-@dynamicMemberLookup
-public struct ThemeSUColor {
-    public subscript(dynamicMember member: String) -> Color {
-        return Color(UIColor.theme[dynamicMember: member])
     }
 }
 
